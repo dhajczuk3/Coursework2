@@ -1,20 +1,14 @@
-# Użyj oficjalnego obrazu Node.js jako obrazu bazowego
+# Base image
 FROM node:14
 
-# Ustaw katalog roboczy w kontenerze
+# Working directory
 WORKDIR /usr/src/app
 
-# Kopiuj plik package.json i package-lock.json (jeśli istnieje)
-COPY package*.json ./
-
-# Zainstaluj zależności projektu
-RUN npm install
-
-# Kopiuj wszystkie pliki źródłowe aplikacji do katalogu roboczego w kontenerze
+# Copy application files
 COPY . .
 
-# Twoja aplikacja wiąże się z portem 3000, więc będziesz używać instrukcji EXPOSE, aby ten port był mapowany przez demon dockera
-EXPOSE 3000
+# Expose port 8080
+EXPOSE 8080
 
-# Definiuj polecenie, które uruchamia aplikację
+# Start command
 CMD [ "node", "server.js" ]
