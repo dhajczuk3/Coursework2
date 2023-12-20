@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t coursework2 .'
+                sh 'docker build -t coursework2:latest .'
             }
         }
         stage('Test') {
             steps {
-                sh 'docker run --rm coursework2 echo "Test successful."'
+                sh 'docker run --rm coursework2:latest echo "Test successful."'
             }
         }
         stage('Deploy') {
@@ -20,7 +20,7 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 sh 'docker login -u dhajczuk3 -p Twojtata8'
-                sh 'docker push coursework2'
+                sh 'docker push coursework2:latest'
             }
         }
     }
