@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t your-image-name .'
+                sh 'docker build -t coursework2 .'
             }
         }
         stage('Test') {
             steps {
-                sh 'docker run --rm coursework2 echo "Test succesful."'
+                sh 'docker run --rm coursework2 echo "Test successful."'
             }
         }
         stage('Deploy') {
