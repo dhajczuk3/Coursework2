@@ -17,3 +17,14 @@ spec:
         image: dhajczuk3/coursework2:latest
         ports:
         - containerPort: 80
+        env:
+          - name: KEY1
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: key1
+          - name: KEY2
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: key2
