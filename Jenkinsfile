@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: >
                     sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin'
                     sh 'docker push dhajczuk3/coursework2:latest'
                 }
@@ -27,8 +27,10 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl set image deployment/my-nodejs-app my-container=dhajczuk3/coursework2:latest'
+                sh 'kubectl set image deployment/my-nodejs-app coursework2=dhajczuk3/coursework2:latest'
             }
         }
     }
 }
+
+
