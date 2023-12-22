@@ -1,30 +1,34 @@
 pipeline {
     agent any
+    environment {
+    }
     stages {
-        stage('Build') {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/dhajczuk3/Coursework2.git'
+            }
+        }
+        stage('Build Docker Image') {
             steps {
                 sh 'docker build -t dhajczuk3/coursework2:latest .'
             }
         }
-        stage('Test') {
+        stage('Test Container') {
             steps {
-                sh 'docker run --rm dhajczuk3/coursework2:latest echo "Test successful."'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                withKubeConfig([credentialsId: 'mckey', serverUrl: 'https://192.168.49.2:8443']) {
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl rollout status deployment/my-app-deployment'
-                }
+                sh 'docker run --rm dhajczuk3/coursework2:latest echo "Test successful"'
             }
         }
         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'docker login -u $USERNAME -p $PASSWORD'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin'
                     sh 'docker push dhajczuk3/coursework2:latest'
                 }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl set image deployment/my-nodejs-app my-container=dhajczuk3/coursework2:latest'
             }
         }
     }
