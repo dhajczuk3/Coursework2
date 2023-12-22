@@ -9,26 +9,25 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker info'
-                sh 'docker build -t dhajczuk3/coursework2:latest .'
+                sh 'sudo docker build -t dhajczuk3/coursework2:latest .'
             }
         }
         stage('Test Container') {
             steps {
-                sh 'docker run --rm dhajczuk3/coursework2:latest echo "Test successful"'
+                sh 'sudo docker run --rm dhajczuk3/coursework2:latest echo "Test successful"'
             }
         }
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                    sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin'
-                    sh 'docker push dhajczuk3/coursework2:latest'
+                    sh 'sudo echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin'
+                    sh 'sudo docker push dhajczuk3/coursework2:latest'
                 }
             }
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl set image deployment/my-nodejs-app coursework2=dhajczuk3/coursework2:latest'
+                sh 'sudo kubectl set image deployment/my-nodejs-app coursework2=dhajczuk3/coursework2:latest'
             }
         }
     }
