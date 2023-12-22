@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
+                withKubeConfig([credentialsId: 'cze', serverUrl: 'https://api.k8s.my-company.com']) {
                     sh 'kubectl apply -f deployment.yaml'
                     sh 'kubectl rollout status deployment/my-app-deployment'
                 }
