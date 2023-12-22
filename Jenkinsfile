@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
+                sh 'docker info'
                 sh 'docker build -t dhajczuk3/coursework2:latest .'
             }
         }
