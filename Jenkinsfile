@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withKubeConfig([credentialsId: 'klucz.txt', serverUrl: 'https://192.168.49.2:8443']) {
+                withKubeConfig([credentialsId: 'mckey', serverUrl: 'https://192.168.49.2:8443']) {
                     sh 'kubectl apply -f deployment.yaml'
                     sh 'kubectl rollout status deployment/my-app-deployment'
                 }
