@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
+                sh 'rm -rf Coursework2'
                 sh 'git clone https://github.com/dhajczuk3/Coursework2.git'
             }
         }
