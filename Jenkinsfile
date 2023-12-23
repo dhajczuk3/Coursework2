@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git clone https://github.com/dhajczuk3/Coursework2.git
+                sh 'git clone https://github.com/dhajczuk3/Coursework2.git'
             }
         }
         stage('Build Docker Image') {
