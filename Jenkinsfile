@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl set image deployment/my-nodejs-app coursework2=dhajczuk3/coursework2:latest'
+                sh 'kubectl set image deployment/my-nodejs-app coursework2=dhajczuk3/coursework2:latest --kubeconfig=/home/ubuntu/.kube/config'
             }
         }
     }
