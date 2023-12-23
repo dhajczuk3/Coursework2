@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Test Container') {
             steps {
-                sh 'docker run --rm dhajczuk3/coursework2:latest echo "Test successful!"'
+                sh 'docker run --rm dhajczuk3/coursework2:latest echo "Test successful"'
             }
         }
         stage('Push to DockerHub') {
